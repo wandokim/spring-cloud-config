@@ -28,7 +28,7 @@ spring:
             - name: Hystrix
               args:
                 name: api-fallback
-                fallbackuri: forward:/apiFallBack
+                fallbackuri: forward:/fallBack
                 
 eureka:
   client:
