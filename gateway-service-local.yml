@@ -12,11 +12,11 @@ spring:
               - GET
               - POST
               - OPTIONS
-        httpclient:
+      httpclient:
           connect-timeout: 10000
           response-timeout: 50s
           wiretap: true
-        httpserver:
+      httpserver:
           wiretap: true
       routes:
         - id: crud-service
