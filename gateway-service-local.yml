@@ -1,0 +1,40 @@
+spring:
+  cloud:
+    gateway:
+      default-filters:
+        - TokenRelay
+      globalcors:
+        corsConfigurations:
+          '[/**]':
+            allowedOrigins:
+              - "*"
+            allowedMethods:
+              - GET
+              - POST
+              - OPTIONS
+        httpclient:
+          connect-timeout: 10000
+          response-timeout: 50s
+          wiretap: true
+        httpserver:
+          wiretap: true
+      routes:
+        - id: crud-service
+          uri: http://localhost:8888/
+          predicates:
+            - Path=/crud/**
+          filters:            
+            - AuthFilter
+            - name: Hystrix
+              args:
+                name: api-fallback
+                fallbackuri: forward:/apiFallBack
+                
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone : http://wando:wando@localhost:8761/eureka/
+  instance:
+    hostname: localhost
